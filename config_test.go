@@ -1,6 +1,12 @@
-package config
+package config_test
 
-import "testing"
+import (
+	"testing"
+
+	"os"
+
+	"github.com/dairaga/config"
+)
 
 type product struct {
 	Name  string `json:"name"`
@@ -9,20 +15,23 @@ type product struct {
 }
 
 func TestConfig(t *testing.T) {
-	if _config == nil {
-		t.Fatal("default config is nil")
-	}
-	t.Log(_config.GetString("title"))
-	t.Logf("%v", _config.GetBool("database.enabled"))
-	t.Logf("%v", _config.GetIntSlice("database.ports"))
+	os.Setenv("ENV_MYSQL_HOST", "localhost")
+	config.BindEnv("ENV")
+	t.Log(config.GetString("mysql.host"))
+
+	t.Log(config.GetString("title"))
+	t.Logf("%v", config.GetBool("database.enabled"))
+	t.Logf("%v", config.GetIntSlice("database.ports"))
 
 	products := []product{}
 
-	if err := _config.GetObject("products", &products); err != nil {
+	if err := config.GetObject("products", &products); err != nil {
 		t.Errorf("get products: %v", err)
 	} else {
 		t.Log(products)
 	}
 
-	t.Logf("%v, %T", _config.Get("clients.data"), _config.Get("clients.data"))
+	t.Logf("%v, %T", config.Get("clients.data"), config.Get("clients.data"))
+	t.Logf("%v, %T", config.GetMap("clients"), config.GetMap("clients"))
+
 }

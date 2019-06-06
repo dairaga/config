@@ -3,6 +3,8 @@ package config
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 	"time"
 
 	toml "github.com/pelletier/go-toml"
@@ -19,13 +21,41 @@ var (
 )
 
 func init() {
-	t, err := toml.LoadFile("config.toml")
-	if err == nil {
-		_config = &Config{t}
+	_config, _ = Load("config.toml", "ENV")
+}
+
+// Load ...
+func Load(file string, envPrefix ...string) (*Config, error) {
+	t, err := toml.LoadFile(file)
+	if err != nil {
+		return nil, err
 	}
+
+	return &Config{t}, nil
 }
 
 // ----------------------------------------------------------------------------
+
+// BindEnv ....
+func (c *Config) BindEnv(envPrefix ...string) {
+	if len(envPrefix) > 0 {
+		for _, p := range envPrefix {
+			p = strings.TrimSpace(p)
+			if p == "" {
+				continue
+			}
+
+			prefix := p + "_"
+			for _, x := range os.Environ() {
+				if strings.HasPrefix(x, prefix) {
+					tmp := strings.SplitN(x, "=", 2)
+					key := strings.ReplaceAll(tmp[0][len(prefix):], "_", ".")
+					c.x.Set(strings.ToLower(key), tmp[1])
+				}
+			}
+		}
+	}
+}
 
 // Get ...
 func (c *Config) Get(key string) interface{} {
@@ -276,6 +306,11 @@ func (c *Config) GetObject(key string, x interface{}) error {
 }
 
 // ----------------------------------------------------------------------------
+
+// BindEnv ...
+func BindEnv(envPrefix ...string) {
+	_config.BindEnv(envPrefix...)
+}
 
 // Get ...
 func Get(key string) interface{} {
