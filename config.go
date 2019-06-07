@@ -26,9 +26,9 @@ func init() {
 
 // Load ...
 func Load(file string, envPrefix ...string) (*Config, error) {
-	t, err := toml.LoadFile(file)
-	if err != nil {
-		return nil, err
+	t, _ := toml.LoadFile(file)
+	if t == nil {
+		t = new(toml.Tree)
 	}
 
 	return &Config{t}, nil
