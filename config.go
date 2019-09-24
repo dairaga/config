@@ -31,7 +31,9 @@ func Load(file string, envPrefix ...string) (*Config, error) {
 		t = new(toml.Tree)
 	}
 
-	return &Config{t}, nil
+	c := &Config{t}
+	c.BindEnv(envPrefix...)
+	return c, nil
 }
 
 // ----------------------------------------------------------------------------
@@ -56,6 +58,8 @@ func (c *Config) BindEnv(envPrefix ...string) {
 		}
 	}
 }
+
+// ----------------------------------------------------------------------------
 
 // Get ...
 func (c *Config) Get(key string) interface{} {
