@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-// Config ...
+// Config represents a configuration for TOML format.
 type Config struct {
 	x *toml.Tree
 }
@@ -24,7 +24,7 @@ func init() {
 	_config, _ = Load("config.toml", "ENV")
 }
 
-// Load ...
+// Load loads a config file and bind environment variables into to configuration.
 func Load(file string, envPrefix ...string) (*Config, error) {
 	t, _ := toml.LoadFile(file)
 	if t == nil {
@@ -38,7 +38,7 @@ func Load(file string, envPrefix ...string) (*Config, error) {
 
 // ----------------------------------------------------------------------------
 
-// BindEnv ....
+// BindEnv binds environment variables starting with prefix string into configuration.
 func (c *Config) BindEnv(envPrefix ...string) {
 	if len(envPrefix) > 0 {
 		for _, p := range envPrefix {
@@ -61,12 +61,12 @@ func (c *Config) BindEnv(envPrefix ...string) {
 
 // ----------------------------------------------------------------------------
 
-// Get ...
+// Get returns value with key.
 func (c *Config) Get(key string) interface{} {
 	return c.x.Get(key)
 }
 
-// GetInt ...
+// GetInt returns int value with key.
 func (c *Config) GetInt(key string, def ...int) int {
 	z := int(0)
 	if len(def) > 0 {
@@ -77,13 +77,13 @@ func (c *Config) GetInt(key string, def ...int) int {
 	return cast.ToInt(x)
 }
 
-// GetIntSlice ...
+// GetIntSlice returns slice of int with key.
 func (c *Config) GetIntSlice(key string) []int {
 	return cast.ToIntSlice(c.x.Get(key))
 
 }
 
-// GetUint ...
+// GetUint returns uint value with key.
 func (c *Config) GetUint(key string, def ...uint) uint {
 	z := uint(0)
 	if len(def) > 0 {
@@ -94,7 +94,7 @@ func (c *Config) GetUint(key string, def ...uint) uint {
 	return cast.ToUint(x)
 }
 
-// GetInt8 ...
+// GetInt8 returns int8 value with key.
 func (c *Config) GetInt8(key string, def ...int8) int8 {
 	z := int8(0)
 	if len(def) > 0 {
@@ -105,7 +105,7 @@ func (c *Config) GetInt8(key string, def ...int8) int8 {
 	return cast.ToInt8(x)
 }
 
-// GetUint8 ...
+// GetUint8 returns uint8 value with key.
 func (c *Config) GetUint8(key string, def ...uint8) uint8 {
 	z := uint8(0)
 	if len(def) > 0 {
@@ -116,7 +116,7 @@ func (c *Config) GetUint8(key string, def ...uint8) uint8 {
 	return cast.ToUint8(x)
 }
 
-// GetInt16 ...
+// GetInt16 return int16 value with key.
 func (c *Config) GetInt16(key string, def ...int16) int16 {
 	z := int16(0)
 	if len(def) > 0 {
@@ -127,7 +127,7 @@ func (c *Config) GetInt16(key string, def ...int16) int16 {
 	return cast.ToInt16(x)
 }
 
-// GetUint16 ...
+// GetUint16 returns uint16 value with key.
 func (c *Config) GetUint16(key string, def ...uint16) uint16 {
 	z := uint16(0)
 	if len(def) > 0 {
@@ -138,7 +138,7 @@ func (c *Config) GetUint16(key string, def ...uint16) uint16 {
 	return cast.ToUint16(x)
 }
 
-// GetInt32 ...
+// GetInt32 returns int32 value with key.
 func (c *Config) GetInt32(key string, def ...int32) int32 {
 	z := int32(0)
 	if len(def) > 0 {
@@ -149,7 +149,7 @@ func (c *Config) GetInt32(key string, def ...int32) int32 {
 	return cast.ToInt32(x)
 }
 
-// GetUint32 ...
+// GetUint32 returns uint32 value with key.
 func (c *Config) GetUint32(key string, def ...uint32) uint32 {
 	z := uint32(0)
 	if len(def) > 0 {
@@ -160,7 +160,7 @@ func (c *Config) GetUint32(key string, def ...uint32) uint32 {
 	return cast.ToUint32(x)
 }
 
-// GetInt64 ...
+// GetInt64 returns int64 value with key.
 func (c *Config) GetInt64(key string, def ...int64) int64 {
 	z := int64(0)
 	if len(def) > 0 {
@@ -171,7 +171,7 @@ func (c *Config) GetInt64(key string, def ...int64) int64 {
 	return cast.ToInt64(x)
 }
 
-// GetUint64 ...
+// GetUint64 returns uint64 value with key.
 func (c *Config) GetUint64(key string, def ...uint64) uint64 {
 	z := uint64(0)
 	if len(def) > 0 {
@@ -182,7 +182,7 @@ func (c *Config) GetUint64(key string, def ...uint64) uint64 {
 	return cast.ToUint64(x)
 }
 
-// GetFloat32 ...
+// GetFloat32 returns float32 value with key.
 func (c *Config) GetFloat32(key string, def ...float32) float32 {
 	z := float32(0)
 	if len(def) > 0 {
@@ -193,7 +193,7 @@ func (c *Config) GetFloat32(key string, def ...float32) float32 {
 	return cast.ToFloat32(x)
 }
 
-// GetFloat64 ...
+// GetFloat64 returns float64 value with key.
 func (c *Config) GetFloat64(key string, def ...float64) float64 {
 	z := float64(0)
 	if len(def) > 0 {
@@ -204,7 +204,7 @@ func (c *Config) GetFloat64(key string, def ...float64) float64 {
 	return cast.ToFloat64(x)
 }
 
-// GetString ...
+// GetString returns string value with key.
 func (c *Config) GetString(key string, def ...string) string {
 	z := ""
 	if len(def) > 0 {
@@ -215,12 +215,12 @@ func (c *Config) GetString(key string, def ...string) string {
 	return cast.ToString(x)
 }
 
-// GetStringSlice ...
+// GetStringSlice returns slice of string with key.
 func (c *Config) GetStringSlice(key string) []string {
 	return cast.ToStringSlice(c.x.Get(key))
 }
 
-// GetBool ...
+// GetBool return boolean value with key.
 func (c *Config) GetBool(key string, def ...bool) bool {
 	z := false
 	if len(def) > 0 {
@@ -231,12 +231,12 @@ func (c *Config) GetBool(key string, def ...bool) bool {
 	return cast.ToBool(x)
 }
 
-// GetBoolSlice ...
+// GetBoolSlice returns slice of boolean with key.
 func (c *Config) GetBoolSlice(key string) []bool {
 	return cast.ToBoolSlice(c.x.Get(key))
 }
 
-// GetTime ...
+// GetTime returns time.Time value of key.
 func (c *Config) GetTime(key string, def ...time.Time) time.Time {
 	z := time.Time{}
 	if len(def) > 0 {
@@ -247,7 +247,7 @@ func (c *Config) GetTime(key string, def ...time.Time) time.Time {
 	return cast.ToTime(x)
 }
 
-// GetDuration ...
+// GetDuration returns time.Duration with key.
 func (c *Config) GetDuration(key string, def ...time.Duration) time.Duration {
 	z := time.Duration(0)
 	if len(def) > 0 {
@@ -258,12 +258,12 @@ func (c *Config) GetDuration(key string, def ...time.Duration) time.Duration {
 	return cast.ToDuration(x)
 }
 
-// GetDurationSlice ...
+// GetDurationSlice returns slice of time.Duration with key.
 func (c *Config) GetDurationSlice(key string) []time.Duration {
 	return cast.ToDurationSlice(c.x.Get(key))
 }
 
-// GetMap ...
+// GetMap returns map[string]interface{} with key.
 func (c *Config) GetMap(key string) map[string]interface{} {
 	x := c.x.Get(key)
 	if x == nil {
@@ -277,7 +277,7 @@ func (c *Config) GetMap(key string) map[string]interface{} {
 	}
 }
 
-// GetObject ...
+// GetObject returns struct value with key. Parameter x must pointer of struct.
 func (c *Config) GetObject(key string, x interface{}) error {
 	a := c.x.Get(key)
 	if a == nil {
@@ -311,123 +311,123 @@ func (c *Config) GetObject(key string, x interface{}) error {
 
 // ----------------------------------------------------------------------------
 
-// BindEnv ...
+// BindEnv binds environment variables starting with prefix string into configuration.
 func BindEnv(envPrefix ...string) {
 	_config.BindEnv(envPrefix...)
 }
 
-// Get ...
+// Get returns value with key.
 func Get(key string) interface{} {
 	return _config.Get(key)
 }
 
-// GetInt ...
+// GetInt returns int value with key.
 func GetInt(key string, def ...int) int {
 	return _config.GetInt(key, def...)
 }
 
-// GetIntSlice ...
+// GetIntSlice returns slice of int with key.
 func GetIntSlice(key string) []int {
 	return _config.GetIntSlice(key)
 
 }
 
-// GetUint ...
+// GetUint returns uint value with key.
 func GetUint(key string, def ...uint) uint {
 	return _config.GetUint(key, def...)
 }
 
-// GetInt8 ...
+// GetInt8 returns int8 value with key.
 func GetInt8(key string, def ...int8) int8 {
 	return _config.GetInt8(key, def...)
 }
 
-// GetUint8 ...
+// GetUint8 returns uint8 value with key.
 func GetUint8(key string, def ...uint8) uint8 {
 	return _config.GetUint8(key, def...)
 }
 
-// GetInt16 ...
+// GetInt16 return int16 value with key.
 func GetInt16(key string, def ...int16) int16 {
 	return _config.GetInt16(key, def...)
 }
 
-// GetUint16 ...
+// GetUint16 returns uint16 value with key.
 func GetUint16(key string, def ...uint16) uint16 {
 	return _config.GetUint16(key, def...)
 }
 
-// GetInt32 ...
+// GetInt32 returns int32 value with key.
 func GetInt32(key string, def ...int32) int32 {
 	return _config.GetInt32(key, def...)
 }
 
-// GetUint32 ...
+// GetUint32 returns uint32 value with key.
 func GetUint32(key string, def ...uint32) uint32 {
 	return _config.GetUint32(key, def...)
 }
 
-// GetInt64 ...
+// GetInt64 returns int64 value with key.
 func GetInt64(key string, def ...int64) int64 {
 	return _config.GetInt64(key, def...)
 }
 
-// GetUint64 ...
+// GetUint64 returns uint64 value with key.
 func GetUint64(key string, def ...uint64) uint64 {
 	return _config.GetUint64(key, def...)
 }
 
-// GetFloat32 ...
+// GetFloat32 returns float32 value with key.
 func GetFloat32(key string, def ...float32) float32 {
 	return _config.GetFloat32(key, def...)
 }
 
-// GetFloat64 ...
+// GetFloat64 returns float64 value with key.
 func GetFloat64(key string, def ...float64) float64 {
 	return _config.GetFloat64(key, def...)
 }
 
-// GetString ...
+// GetString returns string value with key.
 func GetString(key string, def ...string) string {
 	return _config.GetString(key, def...)
 }
 
-// GetStringSlice ...
+// GetStringSlice returns slice of string with key.
 func GetStringSlice(key string) []string {
 	return _config.GetStringSlice(key)
 }
 
-// GetBool ...
+// GetBool return boolean value with key.
 func GetBool(key string, def ...bool) bool {
 	return _config.GetBool(key, def...)
 }
 
-// GetBoolSlice ...
+// GetBoolSlice returns slice of boolean with key.
 func GetBoolSlice(key string) []bool {
 	return _config.GetBoolSlice(key)
 }
 
-// GetTime ...
+// GetTime returns time.Time value of key.
 func GetTime(key string, def ...time.Time) time.Time {
 	return _config.GetTime(key, def...)
 }
 
-// GetDuration ...
+// GetDuration returns time.Duration with key.
 func GetDuration(key string, def ...time.Duration) time.Duration {
 	return _config.GetDuration(key, def...)
 }
 
-// GetDurationSlice ...
+// GetDurationSlice returns slice of time.Duration with key.
 func GetDurationSlice(key string) []time.Duration {
 	return _config.GetDurationSlice(key)
 }
 
-// GetMap ...
+// GetMap returns map[string]interface{} with key.
 func GetMap(key string) map[string]interface{} {
 	return _config.GetMap(key)
 }
 
-// GetObject ...
+// GetObject returns struct value with key. Parameter x must pointer of struct.
 func GetObject(key string, x interface{}) error {
 	return _config.GetObject(key, x)
 }
