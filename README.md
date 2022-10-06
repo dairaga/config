@@ -1,3 +1,3 @@
 # Dairaga Config
 
-A simple tool to read TOML configuration and bind environment variables staring prefix keyword.
+簡易版的 TOML 設定檔工具。大量使用 [spf13 cast](https://github.com/spf13/cast) 工具。
