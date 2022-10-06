@@ -1,8 +1,3 @@
-module github.com/dairaga/config
+module github.com/dairaga/config/v2
 
-go 1.12
-
-require (
-	github.com/pelletier/go-toml v1.4.0
-	github.com/spf13/cast v1.3.0
-)
+go 1.19
