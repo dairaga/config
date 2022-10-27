@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
@@ -18,7 +19,10 @@ const (
 	DEFAULT_FILE = `config.toml`
 )
 
-var ErrNoCandidates = errors.New("no candidates")
+var (
+	ErrNoCandidates = errors.New("no candidates")
+	ErrKeyNotFound  = errors.New("key not found")
+)
 
 // -----------------------------------------------------------------------------
 
@@ -150,6 +154,21 @@ func (c *Config) GetIntSlice(key string, def ...[]int) []int {
 
 func (c *Config) GetSlice(key string, def ...[]any) []any {
 	return ConfigGet(CastSlice, c.src, key, c.delim, def...)
+}
+
+// -----------------------------------------------------------------------------
+
+func (c *Config) Unmarshal(key string, v any) error {
+	obj := c.GetObject(key)
+	if obj == nil {
+		return ErrKeyNotFound
+	}
+
+	objBytes, err := json.Marshal(obj)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(objBytes, v)
 }
 
 // -----------------------------------------------------------------------------
