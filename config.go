@@ -152,6 +152,12 @@ func (c *Config) GetIntSlice(key string, def ...[]int) []int {
 
 // -----------------------------------------------------------------------------
 
+func (c *Config) GetStringSlice(key string, def ...[]string) []string {
+	return ConfigGet(CastStringSlice, c.src, key, c.delim, def...)
+}
+
+// -----------------------------------------------------------------------------
+
 func (c *Config) GetSlice(key string, def ...[]any) []any {
 	return ConfigGet(CastSlice, c.src, key, c.delim, def...)
 }
